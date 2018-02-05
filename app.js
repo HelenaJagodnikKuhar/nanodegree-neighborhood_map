@@ -39,7 +39,7 @@ function loadData(titles) {
 			var data = [];
 
 			for (var pageId in result.query.pages) {
-				var page = result.query.pages[pageId]
+				var page = result.query.pages[pageId];
 
 				//console.log("element", page)
 				if (!page.coordinates || page.coordinates.length < 1) {
@@ -77,7 +77,7 @@ function centerOfLocations(locations) {
 		sumOfLat += location.coordinate.lat;
 		sumOfLng += location.coordinate.lng;
 		count++;
-	})
+	});
 	//console.log("count", count, sumOfLat, sumOfLng);
 	return { lat: sumOfLat / count, lng: sumOfLng / count };
 }
@@ -97,7 +97,7 @@ function MapManager(locations) {
 	});
 
 
-	this.markers = []
+	this.markers = [];
 
 	var addMarker = (location) => {
 		var lat = location.coordinate.lat;
@@ -122,10 +122,10 @@ function MapManager(locations) {
 		//clousers
 		marker.openWindow = function () {
 			infowindow.open(map, marker);
-		}
+		};
 		marker.closeWindow = function () {
 			infowindow.close(map, marker);
-		}
+		};
 
 		marker.addListener('click', function () {
 			//map.setZoom(13);
@@ -134,7 +134,7 @@ function MapManager(locations) {
 		});
 
 		this.markers.push(marker);
-	}
+	};
 
 	locations.forEach(addMarker);
 
@@ -143,17 +143,16 @@ function MapManager(locations) {
 		//remove old markers
 		this.markers.forEach(marker => {
 			marker.setMap(null);
-		})
+		});
 		//add new markers
 		//markerLocations;
 		markerLocations.forEach(addMarker);
-
-	}
+	};
 
 	this.selectMarker = function (location) {
 		//console.log("selectMarker", location);
 		//center map
-		map.setCenter(location.coordinate)
+		map.setCenter(location.coordinate);
 		//open marker window
 		//infowindow.open(map, marker);
 		this.markers.forEach(marker => {
@@ -165,8 +164,7 @@ function MapManager(locations) {
 			}
 
 		});
-
-	}
+	};
 }
 
 
@@ -178,10 +176,10 @@ function ViewModel() {
 
 	self.filteredLocations = ko.computed(function () {
 		return self.titles().filter(location =>
-			location.title.toLowerCase().indexOf(self.search().toLowerCase()) >= 0)
-	}, self)
+			location.title.toLowerCase().indexOf(self.search().toLowerCase()) >= 0);
+	}, self);
 
-	self.search = ko.observable("")
+	self.search = ko.observable("");
 
 	// self.filteredLocations.subscribe(() => {
 	// 	console.log("filteredLocations", self.filteredLocations())
@@ -189,13 +187,13 @@ function ViewModel() {
 
 	self.setLocations = function (locations) {
 		locations.forEach(location => {
-			self.titles.push(location)
-		})
-	}
+			self.titles.push(location);
+		});
+	};
 
 	self.clickMe = function (location, event) {
 		//console.log("clickMe", location, event);
-	}
+	};
 }
 //var data = loadData();
 
@@ -214,16 +212,16 @@ function mapLoaded() {
 		//show map markers based on search results
 		viewModel.filteredLocations.subscribe(() => {
 			mapManager.showMarkers(viewModel.filteredLocations());
-		})
+		});
 		//center selected locations and close menu on click
 		viewModel.clickMe = function (location) {
 			mapManager.selectMarker(location);
 			closeMenu();
-		}
+		};
 	})
 		.catch(error => {
 			alert("Something went wrong.\n" + error.message);
-		})
+		});
 }
 
 //toggle menu
@@ -236,5 +234,5 @@ function closeMenu() {
 }
 
 document.getElementById("menu-button").addEventListener("click", () => {
-	toggleMenu()
-})
+	toggleMenu();
+});
