@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yosemite Falls</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="menu">
+      <input placeholder="Search" class="search" data-bind="value: search, valueUpdate: 'afterkeydown'">
+      <ul data-bind="foreach: filteredLocations" class="locations">
+        <a href="#" data-bind="click: $parent.clickMe">
+          <li data-bind="text: title"></li>
+        </a>
+      </ul>
+    </div>
+    <div class="content">
+      <a href="#" id="menu-button">
+        <svg fill="#333" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          />
+          <path d="M0 0h24v24H0z" fill="none" />
+        </svg>
+      </a>
+      <div class="header">
+        Yosemite Falls
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+  <!--  api google -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANCCfFOBRsL90BjE_B_KgvoRmEDSJDqQo&callback=mapLoaded">
+
+  </script>
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: HelveticaNeue, sans-serif;
+}
+
+.header {
+    line-height: 2.5em;
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid gray;
+    z-index: 100;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+   }
+
+.wrapper {
+    position: relative;
+    height: 100%;
+    transition: transform 0.33s;
+}
+
+.menu {
+    background-color: rgba(243, 247, 244, 0.5);
+    position: absolute;
+    width: 280px;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: 1px solid gray;
+}
+
+.content {
+    height: 100%;
+    margin-left: 280px;
+}
+
+#menu-button {
+    display: none;
+}
+
+.search {
+    width: 100%;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 7px;
+}
+
+.locations{
+    padding: 0;
+}
+
+.locations li {
+    list-style: none;
+}
+
+.locations a {
+    font-size: 18px;
+    text-decoration: none;
+    color:#444;
+    line-height: 2em;
+}
+
+.locations a:hover {
+    color:#000;
+}
+
+@media screen and (max-width: 480px) {
+    #menu-button {
+        display: inline-block;
+        position: absolute;
+        padding: 15px;        
+        z-index: 100;
+    }
+    .content {
+        margin-left: 0;
+    }
+
+    .menu {
+        left: -280px;
+    }
+
+    .menu-open .wrapper {
+        transform: translate(280px,0);
+    }
+}
