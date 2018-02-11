@@ -123,7 +123,7 @@ function MapManager(locations) {
 				.replace("{{src}}", location.image)
 				.replace("{{title}}", location.title);
 
-			infowindow.setContent(markerContent)
+			infowindow.setContent(markerContent);
 			infowindow.open(map, marker);
 		};
 
@@ -252,9 +252,9 @@ document.getElementById("menu-button").addEventListener("click", () => {
 
 
 function gm_authFailure(d1) { 
-	alert("Failed to load the map(Authenticatin failure). Please try later.")
-};
+	alert("Failed to load the map(Authenticatin failure). Please try later.");
+}
 
 function mapLoadError() { 
-	alert("Failed to load the map. Please try again later.")
-};
+	alert("Failed to load the map. Please try again later.");
+}
