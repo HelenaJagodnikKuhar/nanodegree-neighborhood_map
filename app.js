@@ -85,6 +85,7 @@ function centerOfLocations(locations) {
 //manage Google Map API
 function MapManager(locations) {
 	//console.log("locations", locations);
+	var mapManager = this;
 
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 11,
@@ -98,6 +99,10 @@ function MapManager(locations) {
 
 
 	this.markers = [];
+	
+	var infowindow = new google.maps.InfoWindow({
+		//content: markerContent,
+	});
 
 	var addMarker = (location) => {
 		var lat = location.coordinate.lat;
@@ -112,25 +117,34 @@ function MapManager(locations) {
 
 		marker.location = location;
 
-		var markerContent = ' <h2>{{title}}</h2> <img src="{{src}}">'
-			.replace("{{src}}", location.image)
-			.replace("{{title}}", location.title);
-		var infowindow = new google.maps.InfoWindow({
-			content: markerContent,
-		});
-
 		//clousers
 		marker.openWindow = function () {
+			var markerContent = ' <h2>{{title}}</h2> <img src="{{src}}">'
+				.replace("{{src}}", location.image)
+				.replace("{{title}}", location.title);
+
+			infowindow.setContent(markerContent)
 			infowindow.open(map, marker);
 		};
+
 		marker.closeWindow = function () {
 			infowindow.close(map, marker);
 		};
 
-		marker.addListener('click', function () {
+		marker.blink = function (){
+			mapManager.markers.forEach( marker => marker.setAnimation(null));
+		
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function() {
+				marker.setAnimation(null);
+			}, 2150);
+		};
+
+		marker.addListener('click',  () => {
 			//map.setZoom(13);
 			//map.setCenter(marker.getPosition());
-			marker.openWindow();
+			mapManager.selectMarker(location);
+			//marker.blink();
 		});
 
 		this.markers.push(marker);
@@ -159,10 +173,8 @@ function MapManager(locations) {
 			//console.log("addMarker", addMarker);
 			if (marker.location.title === location.title) {
 				marker.openWindow();
-			} else {
-				marker.closeWindow();
-			}
-
+				marker.blink();
+			} 
 		});
 	};
 }
@@ -201,7 +213,7 @@ var viewModel = new ViewModel();
 ko.applyBindings(viewModel);
 
 //called by google maps, when map is ready
-function mapLoaded() {
+function mapLoaded(a,b,c) {
 	//load locations from Wikipedia
 	loadData().then(function (locations) {
 		//console.log("locations", locations);
@@ -217,6 +229,7 @@ function mapLoaded() {
 		viewModel.clickMe = function (location) {
 			mapManager.selectMarker(location);
 			closeMenu();
+			//changeOpacity();
 		};
 	})
 		.catch(error => {
@@ -236,3 +249,12 @@ function closeMenu() {
 document.getElementById("menu-button").addEventListener("click", () => {
 	toggleMenu();
 });
+
+
+function gm_authFailure(d1) { 
+	alert("Failed to load the map(Authenticatin failure). Please try later.")
+};
+
+function mapLoadError() { 
+	alert("Failed to load the map. Please try again later.")
+};

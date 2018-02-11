@@ -35,11 +35,10 @@
       <div id="map"></div>
     </div>
   </div>
-  <!--  api google -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANCCfFOBRsL90BjE_B_KgvoRmEDSJDqQo&callback=mapLoaded">
 
-  </script>
   <script src="app.js"></script>
+    <!--  api google -->
+  <script async defer onerror="mapLoadError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANCCfFOBRsL90BjE_B_KgvoRmEDSJDqQo&callback=mapLoaded"></script>
 </body>
 
 </html>
